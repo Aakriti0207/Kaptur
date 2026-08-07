@@ -63,8 +63,18 @@ const googleCallback = asyncHandler(
             await user.save();
         }
 
+        const accessToken = user.generateAccessToken();
+        const refreshToken = user.generateRefreshToken();
+
+        const options = {
+            httpOnly: true,
+            secure: false
+        };
+
         return res
         .status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
         .json(
             new ApiRes(
                 200,

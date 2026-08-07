@@ -30,7 +30,9 @@ app.use(express.static("public"))
 
 //Routes
 import { authRouter } from "./routes/auth.routes.js";
+import { gmailRouter } from "./routes/gmail.routes.js";
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/gmails", gmailRouter);
 
 export {app}
