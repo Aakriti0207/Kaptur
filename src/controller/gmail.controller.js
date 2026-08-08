@@ -1,9 +1,36 @@
+import { gmail } from "googleapis/build/src/apis/gmail/index.js";
 import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiRes } from "../utils/ApiRes.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { oauth2Client } from "../utils/googleClient.js";
 import { google } from "googleapis";
+
+function parseGmailData(gmailData){
+    const headers = gmailData.payload.headers;
+
+    const getHeader = (name) => {
+        headers.find(h => h.name === name)?.value || "";
+    }
+
+    const subject = getHeader("Subject");
+    const from = getHeader("From");
+    const date = getHeader("Date");
+
+    //Decode Body
+    let bodyData = "";
+    if(gmailData.payload.parts){
+        const htmlPart = gmailData.payload.parts.find(p => p.mimeType === "text/html");
+        if(htmlPart){
+            bodyData = Buffer.from(htmlPart.body.data , "base64").toString("utf-8");
+        }
+    }else if(emailData.payload.body?.data) {
+        bodyData = Buffer.from(emailData.payload.body.data, "base64").toString("utf-8");
+    }
+
+    return { subject, from, date, snippet: gmailData.snippet, body: bodyData };
+
+}
 
 const fetchEmails = asyncHandler(
     async(req,res) => {
@@ -97,12 +124,14 @@ const fetchEmailById = asyncHandler(
             )
         }
 
+        const parsed = parseGmailData(response.data);
+
         return res
         .status(200)
         .json(
             new ApiRes(
                 200,
-                response,
+                [parsed.subject, parsed.from, parsed.date, parsed.snippet],
                 "Gmail fetched successfully!"
             )
         )
