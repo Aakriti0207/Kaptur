@@ -5,12 +5,13 @@ import { ApiRes } from "../utils/ApiRes.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { oauth2Client } from "../utils/googleClient.js";
 import { google } from "googleapis";
+import { extractJobData } from "../services/llmExtraction.service.js";
 
 function parseGmailData(gmailData){
     const headers = gmailData.payload.headers;
 
     const getHeader = (name) => {
-        headers.find(h => h.name === name)?.value || "";
+        return headers.find(h => h.name === name)?.value || "";
     }
 
     const subject = getHeader("Subject");
@@ -24,8 +25,8 @@ function parseGmailData(gmailData){
         if(htmlPart){
             bodyData = Buffer.from(htmlPart.body.data , "base64").toString("utf-8");
         }
-    }else if(emailData.payload.body?.data) {
-        bodyData = Buffer.from(emailData.payload.body.data, "base64").toString("utf-8");
+    }else if(gmailData.payload.body?.data) {
+        bodyData = Buffer.from(gmailData.payload.body.data, "base64").toString("utf-8");
     }
 
     return { subject, from, date, snippet: gmailData.snippet, body: bodyData };
@@ -126,12 +127,14 @@ const fetchEmailById = asyncHandler(
 
         const parsed = parseGmailData(response.data);
 
+        const extracted = await extractJobData(parsed);
+
         return res
         .status(200)
         .json(
             new ApiRes(
                 200,
-                [parsed.subject, parsed.from, parsed.date, parsed.snippet],
+                extracted,
                 "Gmail fetched successfully!"
             )
         )
