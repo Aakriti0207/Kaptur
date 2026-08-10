@@ -23,8 +23,8 @@ const applicationSchema = new Schema(
         },
         status: {
             type: String,
-            enum: ["Applied", "OA", "Interview", "Offer", "Rejected", "Stale"],
-            default: "Applied"
+            enum: ["APPLIED", "OA", "INTERVIEW", "OFFER", "REJECTED"],
+            default: "APPLIED"
         },
         appliedDate: {
             type: Date
