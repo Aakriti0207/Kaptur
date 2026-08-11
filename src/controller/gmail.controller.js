@@ -108,7 +108,86 @@ const fetchEmailById = asyncHandler(
     }
 )
 
+const syncEmails = asyncHandler(
+    async(req,res) => {
+        const user = await User.findById(req.user._id);
+        if(!user?.refreshToken){
+            throw new ApiError(
+                400,
+                "User not logged in"
+            )
+        }
+
+        console.log("User", user);
+
+        const gmail = getGmailClient(user.refreshToken);
+        const messages = await listOfFilteredMails(gmail);
+
+        console.log("gmail-", gmail);
+        console.log("messages", messages);
+        
+        const newApplications = [];
+        let skippedCount = 0;
+        let notJobRelatedCount = 0;
+
+        for(const msg of messages){
+            const existing = await Application.findOne(
+                {sourceEmailId: msg.id}
+            );
+            if(existing){
+                skippedCount++;
+                continue;
+            }
+
+            console.log("MESSAGE ID TYPE:", typeof msg.id);
+            console.log("MESSAGE ID VALUE:", JSON.stringify(msg.id));
+
+            const rawData = await getMailContent(gmail, msg.id);
+            const parsed = parseGmailData(rawData);
+            const extracted = await extractJobData(parsed);
+
+            if(!extracted.isJobRelated){
+                notJobRelatedCount++;
+                continue;
+            }
+
+            const application = await Application.create(
+                {
+                    userId: req.user._id,
+                    company: extracted.company,
+                    role: extracted.role,
+                    status: extracted.status,
+                    appliedDate: new Date(parsed.date),
+                    sourceEmailId: msg.id,
+                    sourceEmailSnippet: parsed.snippet,
+                }
+            )
+
+            newApplications.push(application);
+        }
+
+        return res
+        .status(200)
+        .json(
+            new ApiRes(
+                200,
+                {
+                    newApplications,
+                    summary: {
+                        totalScanned: messages.length,
+                        newlyAdded: newApplications.length,
+                        alreadyTracked: skippedCount,
+                        notJobRelated: notJobRelatedCount
+                    }
+                },
+                `Sync complete! ${newApplications.length} new application(s) found.`
+            )
+        )
+    }
+)
+
 export { 
     fetchEmails,
-    fetchEmailById
+    fetchEmailById,
+    syncEmails
 }
