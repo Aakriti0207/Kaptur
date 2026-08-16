@@ -1,5 +1,5 @@
 import { Application } from "../models/application.model.js";
-import { ApiError } from "../utils/apiError.js";
+import { apiError } from "../utils/apiError.js";
 import { apiRes } from "../utils/apiRes.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
@@ -32,7 +32,7 @@ const createApplication = asyncHandler(
         const { company, role, status, package: packageAmount, platform, appliedDate, notes } = req.body;
 
         if (!company){
-            throw new ApiError(
+            throw new apiError(
                 400,
                 "Company name is required"
             );
@@ -69,7 +69,7 @@ const updateApplication = asyncHandler(async (req, res) => {
     const { company, role, status, package: packageAmount, platform, appliedDate, notes } = req.body;
 
     if(!(company || role || status || packageAmount || platform || appliedDate || notes)){
-        throw new ApiError(
+        throw new apiError(
             400,
             "Any one field must be updated!"
         )
@@ -95,7 +95,7 @@ const updateApplication = asyncHandler(async (req, res) => {
     );
 
     if (!application){
-        throw new ApiError(
+        throw new apiError(
             404, 
             "Application not found"
         );
@@ -118,7 +118,7 @@ const updateApplicationStatus = asyncHandler(
         const { status } = req.body
         const validStatuses = ["Applied", "OA", "Interview", "Offer", "Stale"];
         if(!validStatuses.includes(status)){
-            throw new ApiError(
+            throw new apiError(
                 400,
                 "Invalid status value"
             )
@@ -134,7 +134,7 @@ const updateApplicationStatus = asyncHandler(
             }
         )
         if(!application){
-            throw new ApiError(
+            throw new apiError(
                 400,
                 "Application not found!"
             )
@@ -168,7 +168,7 @@ const archiveApplication = asyncHandler(
             }
         );
         if(!application){
-            throw new ApiError(
+            throw new apiError(
                 400,
                 "Application not found!"
             )

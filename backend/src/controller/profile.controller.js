@@ -1,5 +1,5 @@
 import { apiRes } from "../utils/apiRes.js";
-import { ApiError } from "../utils/apiError.js";
+import { apiError } from "../utils/apiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
 
@@ -22,7 +22,7 @@ const updateProfile = asyncHandler(
         const { fullName, phoneNum, preferredJobRoles } = req.body;
 
         if(!(fullName || phoneNum || preferredJobRoles)){
-            throw new ApiError(
+            throw new apiError(
                 400,
                 "Any field is required"
             )

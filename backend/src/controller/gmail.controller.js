@@ -1,5 +1,5 @@
 import { User } from "../models/user.model.js";
-import { ApiError } from "../utils/apiError.js";
+import { apiError } from "../utils/apiError.js";
 import { apiRes } from "../utils/apiRes.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { extractJobData } from "../services/llmExtraction.service.js";
@@ -12,7 +12,7 @@ const fetchEmails = asyncHandler(
         const user = await User.findById(req.user._id);
 
         if(!user.refreshToken){
-            throw new ApiError(
+            throw new apiError(
                 404,
                 "User not logged in"
             )
@@ -23,7 +23,7 @@ const fetchEmails = asyncHandler(
         const messages = await listOfFilteredMails(gmail); 
 
         if(!messages){
-            throw new ApiError(
+            throw new apiError(
                 500,
                 "Failed to fetch emails"
             )
@@ -47,7 +47,7 @@ const fetchEmailById = asyncHandler(
         const user = await User.findById(req.user._id);
 
         if(!user || !user.refreshToken){
-            throw new ApiError(
+            throw new apiError(
                 404,
                 "User not logged in"
             )
@@ -58,7 +58,7 @@ const fetchEmailById = asyncHandler(
         const rawData = await getMailContent(gmail, messageId);
 
         if(!rawData){
-            throw new ApiError(
+            throw new apiError(
                 500,
                 "Failed to fetch email"
             )
@@ -85,7 +85,7 @@ const fetchEmailById = asyncHandler(
                 )
 
                 if(!application){
-                    throw new ApiError(
+                    throw new apiError(
                         500,
                         "Failed to generate application"
                     )
@@ -112,7 +112,7 @@ const syncEmails = asyncHandler(
     async(req,res) => {
         const user = await User.findById(req.user._id);
         if(!user?.refreshToken){
-            throw new ApiError(
+            throw new apiError(
                 400,
                 "User not logged in"
             )
@@ -190,7 +190,7 @@ const previewInbox = asyncHandler(
     async (req, res) => {
         const user = await User.findById(req.user._id);
         if (!user?.refreshToken){
-            throw new ApiError(
+            throw new apiError(
                 404, 
                 "User not logged in"
             );
