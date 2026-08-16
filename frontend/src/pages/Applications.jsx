@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { Search, ArrowRight, Archive } from "lucide-react";
+import { Search, ArrowRight, Archive, Pencil, Plus } from "lucide-react";
 import api from "../api/client";
-import StatusBadge from "../components/StatusBadge";
+import StatusBadge from "../components/StatusBadge.jsx";
+import Modal from "../components/Modals.jsx";
+import ApplicationForm from "../components/ApplicationForm.jsx";
 
 const FILTERS = ["All", "Applied", "OA", "Interview", "Offer", "Rejected"];
 
@@ -10,6 +12,7 @@ export default function Applications() {
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState("All");
   const [search, setSearch] = useState("");
+  const [modalState, setModalState] = useState(null);
 
   const loadApplications = async () => {
     try {
@@ -35,6 +38,20 @@ export default function Applications() {
     }
   };
 
+  const handleCreate = async (formData) => {
+    const res = await api.post("/applications/create-application", formData);
+    setApplications((prev) => [res.data.data, ...prev]);
+    setModalState(null);
+  };
+
+  const handleUpdate = async (formData) => {
+    const res = await api.patch(`/applications/${modalState._id}/edit-application`, formData);
+    setApplications((prev) =>
+      prev.map((app) => (app._id === modalState._id ? res.data.data : app))
+    );
+    setModalState(null);
+  };
+
   const filtered = applications.filter((app) => {
     const matchesFilter = activeFilter === "All" || app.status === activeFilter;
     const matchesSearch =
@@ -50,13 +67,24 @@ export default function Applications() {
 
   return (
     <div>
-      <h2 className="font-serif text-2xl font-semibold text-cream-textPrimary dark:text-espresso-textPrimary">
-        Applications
-      </h2>
-      <p className="text-sm text-cream-textSecondary dark:text-espresso-textSecondary mt-1 mb-6">
-        Your job search, in one place.
-      </p>
-
+      <div className="flex items-start justify-between mb-6">
+        <div>
+          <h2 className="font-serif text-2xl font-semibold text-cream-textPrimary dark:text-espresso-textPrimary">
+            Applications
+          </h2>
+          <p className="text-sm text-cream-textSecondary dark:text-espresso-textSecondary mt-1">
+            Your job search, in one place.
+          </p>
+        </div>
+        <button
+          onClick={() => setModalState("add")}
+          className="flex items-center gap-2 text-sm font-medium bg-caramel text-white px-4 py-2 rounded-lg hover:bg-caramel-dark transition-colors"
+        >
+          <Plus size={15} />
+          Add Application
+        </button>
+      </div>
+ 
       <div className="relative mb-4">
         <Search
           size={16}
@@ -70,7 +98,7 @@ export default function Applications() {
           className="w-full pl-9 pr-4 py-2.5 rounded-lg bg-cream-card dark:bg-espresso-card border border-cream-border dark:border-espresso-border text-sm text-cream-textPrimary dark:text-espresso-textPrimary placeholder:text-cream-textSecondary dark:placeholder:text-espresso-textSecondary outline-none focus:border-caramel"
         />
       </div>
-
+ 
       <div className="flex gap-2 mb-6 flex-wrap">
         {FILTERS.map((filter) => (
           <button
@@ -86,16 +114,16 @@ export default function Applications() {
           </button>
         ))}
       </div>
-
+ 
       <div className="bg-cream-card dark:bg-espresso-card border border-cream-border dark:border-espresso-border rounded-card overflow-hidden">
-        <div className="grid grid-cols-[1.5fr_1.5fr_1fr_0.8fr_0.5fr] px-5 py-3 text-xs font-medium text-cream-textSecondary dark:text-espresso-textSecondary border-b border-cream-border dark:border-espresso-border">
+        <div className="grid grid-cols-[1.5fr_1.5fr_1fr_0.8fr_0.6fr] px-5 py-3 text-xs font-medium text-cream-textSecondary dark:text-espresso-textSecondary border-b border-cream-border dark:border-espresso-border">
           <span>Company</span>
           <span>Role</span>
           <span>Status</span>
           <span>Applied</span>
           <span></span>
         </div>
-
+ 
         {loading ? (
           <p className="p-5 text-sm text-cream-textSecondary dark:text-espresso-textSecondary">
             Loading…
@@ -108,7 +136,7 @@ export default function Applications() {
           filtered.map((app) => (
             <div
               key={app._id}
-              className="grid grid-cols-[1.5fr_1.5fr_1fr_0.8fr_0.5fr] px-5 py-3.5 items-center text-sm border-b border-cream-border dark:border-espresso-border last:border-0 hover:bg-cream-canvas/50 dark:hover:bg-espresso-canvas/50"
+              className="grid grid-cols-[1.5fr_1.5fr_1fr_0.8fr_0.6fr] px-5 py-3.5 items-center text-sm border-b border-cream-border dark:border-espresso-border last:border-0 hover:bg-cream-canvas/50 dark:hover:bg-espresso-canvas/50"
             >
               <span className="font-medium text-cream-textPrimary dark:text-espresso-textPrimary">
                 {app.company}
@@ -125,16 +153,23 @@ export default function Applications() {
                   day: "numeric",
                 })}
               </span>
-              <div className="flex items-center gap-2 justify-end">
+              <div className="flex items-center gap-3 justify-end">
+                <button
+                  onClick={() => setModalState(app)}
+                  title="Edit"
+                  className="text-cream-textSecondary dark:text-espresso-textSecondary hover:text-caramel"
+                >
+                  <Pencil size={14} />
+                </button>
                 <button
                   onClick={() => handleArchive(app._id)}
                   title="Archive"
                   className="text-cream-textSecondary dark:text-espresso-textSecondary hover:text-caramel"
                 >
-                  <Archive size={15} />
+                  <Archive size={14} />
                 </button>
                 <ArrowRight
-                  size={15}
+                  size={14}
                   className="text-cream-textSecondary dark:text-espresso-textSecondary"
                 />
               </div>
@@ -142,6 +177,28 @@ export default function Applications() {
           ))
         )}
       </div>
+ 
+      {modalState === "add" && (
+        <Modal title="Add Application" onClose={() => setModalState(null)}>
+          <ApplicationForm
+            onSubmit={handleCreate}
+            onCancel={() => setModalState(null)}
+            submitLabel="Add"
+          />
+        </Modal>
+      )}
+ 
+      {modalState && modalState !== "add" && (
+        <Modal title="Edit Application" onClose={() => setModalState(null)}>
+          <ApplicationForm
+            initialData={modalState}
+            onSubmit={handleUpdate}
+            onCancel={() => setModalState(null)}
+            submitLabel="Save changes"
+          />
+        </Modal>
+      )}
     </div>
   );
 }
+ 

@@ -7,17 +7,20 @@ import StatusBadge from "../components/StatusBadge";
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
   const [applications, setApplications] = useState([]);
+  const [profile, setProfile] = useState(null);
   const [syncing, setSyncing] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const loadData = async () => {
     try {
-      const [statsRes, appsRes] = await Promise.all([
+      const [statsRes, appsRes, profileRes] = await Promise.all([
         api.get("/dashboard"),
         api.get("/applications"),
+        api.get("/profile"),
       ]);
       setStats(statsRes.data.data);
       setApplications(appsRes.data.data.slice(0, 4)); // recent 4
+      setProfile(profileRes.data.data);
     } catch (err) {
       console.error("Failed to load dashboard:", err);
     } finally {
@@ -50,7 +53,10 @@ export default function Dashboard() {
       <div className="flex items-start justify-between mb-8">
         <div>
           <h2 className="font-serif text-2xl font-semibold text-cream-textPrimary dark:text-espresso-textPrimary">
-            Good morning, Aakriti.
+            Good morning,{" "}
+            <span className="text-cream-textPrimary dark:text-espresso-textPrimary font-medium">
+              {profile?.fullName || "there"}
+            </span>
           </h2>
           <p className="text-sm text-cream-textSecondary dark:text-espresso-textSecondary mt-1">
             Your applications, at a glance.
