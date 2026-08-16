@@ -1,6 +1,6 @@
 import { Application } from "../models/application.model.js";
 import { ApiError } from "../utils/apiError.js";
-import { ApiRes } from "../utils/ApiRes.js";
+import { apiRes } from "../utils/apiRes.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const getUserApplications = asyncHandler(
@@ -18,7 +18,7 @@ const getUserApplications = asyncHandler(
         return res
         .status(200)
         .json(
-            new ApiRes(
+            new apiRes(
                 200,
                 applications,
                 "Applications fetched successfully!"
@@ -55,7 +55,7 @@ const createApplication = asyncHandler(
         return res
         .status(201)
         .json(
-            new ApiRes(
+            new apiRes(
                 201, 
                 application, 
                 "Application added!"
@@ -104,7 +104,7 @@ const updateApplication = asyncHandler(async (req, res) => {
     return res
     .status(200)
     .json(
-        new ApiRes(
+        new apiRes(
             200, 
             application, 
             "Application updated!"
@@ -142,7 +142,7 @@ const updateApplicationStatus = asyncHandler(
         return res
         .status(200)
         .json(
-            new ApiRes(
+            new apiRes(
                 200,
                 application,
                 "Status updated successfully"
@@ -176,7 +176,7 @@ const archiveApplication = asyncHandler(
         return res
         .status(200)
         .json(
-            new ApiRes(
+            new apiRes(
                 200,
                 application,
                 "Application archived successfully!"

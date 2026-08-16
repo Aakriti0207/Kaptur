@@ -1,6 +1,6 @@
 import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/apiError.js";
-import { ApiRes } from "../utils/ApiRes.js";
+import { apiRes } from "../utils/apiRes.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { extractJobData } from "../services/llmExtraction.service.js";
 import { Application } from "../models/application.model.js";
@@ -32,7 +32,7 @@ const fetchEmails = asyncHandler(
         return res
         .status(200)
         .json(
-            new ApiRes(
+            new apiRes(
                 200,
                 messages,
                 "Mails fetched successfully!"
@@ -98,7 +98,7 @@ const fetchEmailById = asyncHandler(
         return res
         .status(200)
         .json(
-            new ApiRes(
+            new apiRes(
                 200,
                 {extracted, application},
                 "Gmail fetched successfully!"
@@ -169,7 +169,7 @@ const syncEmails = asyncHandler(
         return res
         .status(200)
         .json(
-            new ApiRes(
+            new apiRes(
                 200,
                 {
                     newApplications,
@@ -218,7 +218,7 @@ const previewInbox = asyncHandler(
         return res
         .status(200)
         .json(
-            new ApiRes(
+            new apiRes(
                 200, 
                 preview, 
                 "Inbox preview fetched!"

@@ -1,4 +1,4 @@
-class ApiRes {
+class apiRes {
     constructor(
         statusCode,
         data,
@@ -9,4 +9,4 @@ class ApiRes {
         this.message = message
     }
 }
-export { ApiRes }
+export { apiRes }

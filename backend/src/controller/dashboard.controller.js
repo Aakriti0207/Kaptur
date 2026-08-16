@@ -1,6 +1,6 @@
 import { Application } from "../models/application.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiRes } from "../utils/ApiRes.js";
+import { apiRes } from "../utils/apiRes.js";
 
 const getDashboardStats = asyncHandler(
     async(req,res) => {
@@ -34,7 +34,7 @@ const getDashboardStats = asyncHandler(
         return res
         .status(200)
         .json(
-            new ApiRes(
+            new apiRes(
                 200,
                 {
                     totalApplications,

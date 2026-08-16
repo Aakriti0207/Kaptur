@@ -1,4 +1,4 @@
-import { ApiRes } from "../utils/ApiRes.js";
+import { apiRes } from "../utils/apiRes.js";
 import { ApiError } from "../utils/apiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
@@ -8,7 +8,7 @@ const getProfile = asyncHandler(
         return res
         .status(200)
         .json(
-            new ApiRes(
+            new apiRes(
                 200,
                 req.user, 
                 "Profile fetched successfully!"
@@ -43,7 +43,7 @@ const updateProfile = asyncHandler(
         return res
         .status(200)
         .json(
-            new ApiRes(
+            new apiRes(
                 200, 
                 user, 
                 "Profile updated successfully!"

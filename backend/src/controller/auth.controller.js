@@ -3,7 +3,7 @@ import { oauth2Client } from "../utils/googleClient.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { google } from "googleapis";
 import { User } from "../models/user.model.js";
-import { ApiRes } from "../utils/ApiRes.js";
+import { apiRes } from "../utils/apiRes.js";
 
 const googleLogin = asyncHandler(
     async(req,res) => {
@@ -78,7 +78,7 @@ const googleCallback = asyncHandler(
         .cookie("refreshToken", refreshToken, options)
         .redirect("http://localhost:5173/")
         // .json(
-        //     new ApiRes(
+        //     new apiRes(
         //         200,
         //         user,
         //         "Permission grant successful!"
