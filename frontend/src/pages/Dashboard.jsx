@@ -3,6 +3,7 @@ import { RefreshCw } from "lucide-react";
 import api from "../api/client";
 import StatCard from "../components/StatCard";
 import StatusBadge from "../components/StatusBadge";
+import InboxPreview from "../components/InboxPreview";
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
@@ -78,27 +79,29 @@ export default function Dashboard() {
         <StatCard value={stats?.onlineAssessments ?? 0} label="Online assessments" />
         <StatCard value={stats?.offers ?? 0} label="Offers" />
       </div>
-
-      <div className="bg-cream-card dark:bg-espresso-card border border-cream-border dark:border-espresso-border rounded-card p-5">
-        <h3 className="font-medium text-cream-textPrimary dark:text-espresso-textPrimary mb-4">
-          Recent applications
-        </h3>
-        {applications.length === 0 ? (
-          <p className="text-sm text-cream-textSecondary dark:text-espresso-textSecondary">
-            No applications yet. Sync your Gmail to get started.
-          </p>
-        ) : (
-          <div className="flex flex-col gap-3">
-            {applications.map((app) => (
-              <div key={app._id} className="flex items-center justify-between">
-                <span className="text-sm font-medium text-cream-textPrimary dark:text-espresso-textPrimary">
-                  {app.company}
-                </span>
-                <StatusBadge status={app.status} />
-              </div>
-            ))}
-          </div>
-        )}
+      <div className="grid grid-cols-2 gap-6 mt-6">
+        <div className="bg-cream-card dark:bg-espresso-card border border-cream-border dark:border-espresso-border rounded-card p-5">
+          <h3 className="font-medium text-cream-textPrimary dark:text-espresso-textPrimary mb-4">
+            Recent applications
+          </h3>
+          {applications.length === 0 ? (
+            <p className="text-sm text-cream-textSecondary dark:text-espresso-textSecondary">
+              No applications yet. Sync your Gmail to get started.
+            </p>
+          ) : (
+            <div className="flex flex-col gap-3">
+              {applications.map((app) => (
+                <div key={app._id} className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-cream-textPrimary dark:text-espresso-textPrimary">
+                    {app.company}
+                  </span>
+                  <StatusBadge status={app.status} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <InboxPreview />
       </div>
     </div>
   );

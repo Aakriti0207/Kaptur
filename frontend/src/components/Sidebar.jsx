@@ -49,11 +49,11 @@ export default function Sidebar() {
           {isDark ? <Sun size={14} /> : <Moon size={14} />}
           {isDark ? "Light mode" : "Dark mode"}
         </button>
-        <p className="text-[11px] text-sidebar-textMuted leading-relaxed">
+        {/* <p className="text-[11px] text-sidebar-textMuted leading-relaxed">
           Synced with Gmail.
           <br />
           Last synced 4 min ago.
-        </p>
+        </p> */}
       </div>
     </aside>
   );

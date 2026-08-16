@@ -19,7 +19,21 @@ const listOfFilteredMails = async(gmail) => {
     const response = await gmail.users.messages.list(
         {
             userId: "me",
-            q: `subject:(interview OR congratulations OR "application received" OR shortlisted OR "thank you for applying" OR selected)`,
+            q: `(
+                interview OR
+                "online assessment" OR
+                "online test" OR
+                "application received" OR
+                "thank you for applying" OR
+                shortlisted OR
+                selected OR
+                congratulations OR
+                "offer letter" OR
+                "we're pleased to offer" OR
+                rejection OR
+                rejected OR
+                "not moving forward"
+            )`,
             maxResults: 20
         }
     )

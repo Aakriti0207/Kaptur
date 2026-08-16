@@ -186,8 +186,50 @@ const syncEmails = asyncHandler(
     }
 )
 
+const previewInbox = asyncHandler(
+    async (req, res) => {
+        const user = await User.findById(req.user._id);
+        if (!user?.refreshToken){
+            throw new ApiError(
+                404, 
+                "User not logged in"
+            );
+        }
+
+        const gmail = getGmailClient(user.refreshToken);
+        const messages = await listOfFilteredMails(gmail);
+
+        const recentFive = messages.slice(0, 5);
+
+        const preview = await Promise.all(
+            recentFive.map(async (msg) => {
+                const rawData = await getMailContent(gmail, msg.id);
+                const parsed = parseGmailData(rawData);
+                return {
+                    id: msg.id,
+                    subject: parsed.subject,
+                    from: parsed.from,
+                    snippet: parsed.snippet,
+                    date: parsed.date,
+                };
+            })
+        );
+
+        return res
+        .status(200)
+        .json(
+            new ApiRes(
+                200, 
+                preview, 
+                "Inbox preview fetched!"
+            )
+        );    
+    }
+);
+
 export { 
     fetchEmails,
     fetchEmailById,
-    syncEmails
+    syncEmails,
+    previewInbox
 }
