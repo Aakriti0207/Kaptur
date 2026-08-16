@@ -76,7 +76,7 @@ const googleCallback = asyncHandler(
         .status(200)
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
-        .redirect("http://localhost:5173/")
+        .redirect("https://kaptur-flame.vercel.app/")
         // .json(
         //     new apiRes(
         //         200,
