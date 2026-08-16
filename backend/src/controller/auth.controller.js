@@ -68,20 +68,22 @@ const googleCallback = asyncHandler(
 
         const options = {
             httpOnly: true,
-            secure: false
+            secure: false,
+            sameSite: "lax"
         };
 
         return res
         .status(200)
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
-        .json(
-            new ApiRes(
-                200,
-                user,
-                "Permission grant successful!"
-            )
-        )
+        .redirect("http://localhost:5173/")
+        // .json(
+        //     new ApiRes(
+        //         200,
+        //         user,
+        //         "Permission grant successful!"
+        //     )
+        // )
     }
 )
 

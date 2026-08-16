@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Applications from "./pages/Applications";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
+import ProtectedRoute from "./components/ProtectedRoutes";
 
 export default function App() {
   return (
@@ -12,7 +13,11 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route element={<Layout />}>
+          <Route element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }>
             <Route path="/" element={<Dashboard />} />
             <Route path="/applications" element={<Applications />} />
             <Route path="/insights" element={<div>Insights — coming in V2</div>} />
