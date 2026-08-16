@@ -68,8 +68,8 @@ const googleCallback = asyncHandler(
 
         const options = {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax"
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
         };
 
         return res
