@@ -76,7 +76,7 @@ const googleCallback = asyncHandler(
         .status(200)
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
-        .redirect("https://kaptur-flame.vercel.app/")
+        .redirect(process.env.FRONTEND_URL || "http://localhost:5173/")
         // .json(
         //     new apiRes(
         //         200,
@@ -87,7 +87,30 @@ const googleCallback = asyncHandler(
     }
 )
 
+const logoutUser = asyncHandler(
+    async(req,res) => {
+        const options = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
+        }
+
+        return res
+        .status(200)
+        .clearCookie("accessToken", options)
+        .clearCookie("refreshToken", options)
+        .json(
+            new apiRes(
+                200, 
+                {}, 
+                "Logged out successfully!"
+            )
+        );
+    }
+)
+
 export {
     googleLogin,
-    googleCallback
+    googleCallback,
+    logoutUser
 }
