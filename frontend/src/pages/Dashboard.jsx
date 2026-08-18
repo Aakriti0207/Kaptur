@@ -46,7 +46,22 @@ export default function Dashboard() {
   };
 
   if (loading) {
-    return <p className="text-cream-textSecondary dark:text-espresso-textSecondary">Loading…</p>;
+    return (
+      <div>
+        <div className="flex items-start justify-between mb-8">
+          <div>
+            <SkeletonCard className="h-8 w-64 mb-2" />
+            <SkeletonCard className="h-4 w-40" />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 md:flex gap-4 mb-6">
+          {[1, 2, 3, 4].map((i) => (
+            <SkeletonCard key={i} className="h-24 flex-1" />
+          ))}
+        </div>
+        <SkeletonCard className="h-64" />
+      </div>
+    );
   }
 
   return (
@@ -73,13 +88,13 @@ export default function Dashboard() {
         </button>
       </div>
 
-      <div className="flex gap-4 mb-6">
+      <div className="grid grid-cols-2 md:flex gap-4 mb-6">
         <StatCard value={stats?.totalApplications ?? 0} label="Applied" />
         <StatCard value={stats?.interviewsThisWeek ?? 0} label="Interviews this week" />
         <StatCard value={stats?.onlineAssessments ?? 0} label="Online assessments" />
         <StatCard value={stats?.offers ?? 0} label="Offers" />
       </div>
-      <div className="grid grid-cols-2 gap-6 mt-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         <div className="bg-cream-card dark:bg-espresso-card border border-cream-border dark:border-espresso-border rounded-card p-5">
           <h3 className="font-medium text-cream-textPrimary dark:text-espresso-textPrimary mb-4">
             Recent applications

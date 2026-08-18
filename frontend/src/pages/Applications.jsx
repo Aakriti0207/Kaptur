@@ -116,7 +116,7 @@ export default function Applications() {
       </div>
  
       <div className="bg-cream-card dark:bg-espresso-card border border-cream-border dark:border-espresso-border rounded-card overflow-hidden">
-        <div className="grid grid-cols-[1.5fr_1.5fr_1fr_0.8fr_0.6fr] px-5 py-3 text-xs font-medium text-cream-textSecondary dark:text-espresso-textSecondary border-b border-cream-border dark:border-espresso-border">
+        <div className="hidden md:grid grid-cols-[1.5fr_1.5fr_1fr_0.8fr_0.6fr] px-5 py-3 text-xs font-medium text-cream-textSecondary dark:text-espresso-textSecondary border-b border-cream-border dark:border-espresso-border">
           <span>Company</span>
           <span>Role</span>
           <span>Status</span>
@@ -136,42 +136,66 @@ export default function Applications() {
           filtered.map((app) => (
             <div
               key={app._id}
-              className="grid grid-cols-[1.5fr_1.5fr_1fr_0.8fr_0.6fr] px-5 py-3.5 items-center text-sm border-b border-cream-border dark:border-espresso-border last:border-0 hover:bg-cream-canvas/50 dark:hover:bg-espresso-canvas/50"
+              className="border-b border-cream-border dark:border-espresso-border last:border-0"
             >
-              <span className="font-medium text-cream-textPrimary dark:text-espresso-textPrimary">
-                {app.company}
-              </span>
-              <span className="text-cream-textSecondary dark:text-espresso-textSecondary">
-                {app.role || "—"}
-              </span>
-              <span>
-                <StatusBadge status={app.status} />
-              </span>
-              <span className="text-cream-textSecondary dark:text-espresso-textSecondary text-xs">
-                {new Date(app.appliedDate).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                })}
-              </span>
-              <div className="flex items-center gap-3 justify-end">
-                <button
-                  onClick={() => setModalState(app)}
-                  title="Edit"
-                  className="text-cream-textSecondary dark:text-espresso-textSecondary hover:text-caramel"
-                >
-                  <Pencil size={14} />
-                </button>
-                <button
-                  onClick={() => handleArchive(app._id)}
-                  title="Archive"
-                  className="text-cream-textSecondary dark:text-espresso-textSecondary hover:text-caramel"
-                >
-                  <Archive size={14} />
-                </button>
-                <ArrowRight
-                  size={14}
-                  className="text-cream-textSecondary dark:text-espresso-textSecondary"
-                />
+              {/* Desktop row */}
+              <div className="hidden md:grid grid-cols-[1.5fr_1.5fr_1fr_0.8fr_0.6fr] px-5 py-3.5 items-center text-sm hover:bg-cream-canvas/50 dark:hover:bg-espresso-canvas/50">
+                <span className="font-medium text-cream-textPrimary dark:text-espresso-textPrimary">
+                  {app.company}
+                </span>
+                <span className="text-cream-textSecondary dark:text-espresso-textSecondary">
+                  {app.role || "—"}
+                </span>
+                <span>
+                  <StatusBadge status={app.status} />
+                </span>
+                <span className="text-cream-textSecondary dark:text-espresso-textSecondary text-xs">
+                  {new Date(app.appliedDate).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
+                <div className="flex items-center gap-3 justify-end">
+                  <button
+                    onClick={() => setModalState(app)}
+                    title="Edit"
+                    className="text-cream-textSecondary dark:text-espresso-textSecondary hover:text-caramel"
+                  >
+                    <Pencil size={14} />
+                  </button>
+                  <button
+                    onClick={() => handleArchive(app._id)}
+                    title="Archive"
+                    className="text-cream-textSecondary dark:text-espresso-textSecondary hover:text-caramel"
+                  >
+                    <Archive size={14} />
+                  </button>
+                  {/* <ArrowRight
+                    size={14}
+                    className="text-cream-textSecondary dark:text-espresso-textSecondary"
+                  /> */}
+                </div>
+              </div>
+              {/* Mobile card */}
+              <div className="md:hidden p-4 flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-cream-textPrimary dark:text-espresso-textPrimary">{app.company}</span>
+                  <StatusBadge status={app.status} />
+                </div>
+                <span className="text-sm text-cream-textSecondary dark:text-espresso-textSecondary">{app.role || "—"}</span>
+                <div className="flex items-center justify-between mt-1">
+                  <span className="text-xs text-cream-textSecondary dark:text-espresso-textSecondary">
+                    {new Date(app.appliedDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                  </span>
+                  <div className="flex items-center gap-3">
+                    <button onClick={() => setModalState(app)} className="text-cream-textSecondary dark:text-espresso-textSecondary">
+                      <Pencil size={14} />
+                    </button>
+                    <button onClick={() => handleArchive(app._id)} className="text-cream-textSecondary dark:text-espresso-textSecondary">
+                      <Archive size={14} />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           ))
