@@ -6,6 +6,15 @@
 
 body {
   font-family: "Inter", system-ui, sans-serif;
+  background-color: #1F1815; /* dark default */
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+html.light.body {
+  background-color: #F5EFE6; /* light override */
 }
 
 /* smooth theme transitions */

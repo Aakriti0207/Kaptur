@@ -4,6 +4,7 @@ import api from "../api/client";
 import StatCard from "../components/StatCard";
 import StatusBadge from "../components/StatusBadge";
 import InboxPreview from "../components/InboxPreview";
+import SkeletonCard from "../components/skeletonCard";
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
@@ -66,7 +67,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
         <div>
           <h2 className="font-serif text-2xl font-semibold text-cream-textPrimary dark:text-espresso-textPrimary">
             Good morning,{" "}
