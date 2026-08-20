@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Search, ArrowRight, Archive, Pencil, Plus } from "lucide-react";
-import api from "../api/client";
-import StatusBadge from "../components/StatusBadge.jsx";
-import Modal from "../components/Modals.jsx";
+import api from "../../../core/api/client";
+import StatusBadge from "../../../core/components/StatusBadge.jsx";
+import Modal from "../../../core/components/Modals.jsx";
 import ApplicationForm from "../components/ApplicationForm.jsx";
+import { getApplications, createApplication, archiveApplication } from "../api/applications.api.js";
 
 const FILTERS = ["All", "Applied", "OA", "Interview", "Offer", "Rejected"];
 

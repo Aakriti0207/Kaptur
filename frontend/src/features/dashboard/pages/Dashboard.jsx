@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { RefreshCw } from "lucide-react";
-import api from "../api/client";
+import api from "../../../core/api/client";
 import StatCard from "../components/StatCard";
-import StatusBadge from "../components/StatusBadge";
+import StatusBadge from "../../../core/components/StatusBadge";
 import InboxPreview from "../components/InboxPreview";
-import SkeletonCard from "../components/skeletonCard";
+import SkeletonCard from "../../../core/components/skeletonCard";
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null);

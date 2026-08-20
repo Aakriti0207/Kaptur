@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { LayoutDashboard, Briefcase, BarChart3, User, Moon, Sun, LogOut, Menu, X } from "lucide-react";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../core/context/ThemeContext";
 import { useNavigate } from "react-router-dom";
-import api from "../api/client";
+import api from "../core/api/client.js";
 import { useState } from "react";
 
 const navItems = [
