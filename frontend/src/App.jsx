@@ -9,7 +9,7 @@ import Applications from "./features/applications/pages/Applications.jsx";
 import Profile from "./features/userProfile/pages/Profile.jsx";
 import Login from "./features/auth/pages/Login.jsx";
 import ProtectedRoute from "./features/auth/components/ProtectedRoutes.jsx";
-import ScrollToTop from "./components/ScrolltoTop.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 export default function App() {
   return (
