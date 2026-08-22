@@ -76,7 +76,7 @@ const googleCallback = asyncHandler(
         .status(200)
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
-        .redirect(process.env.FRONTEND_URL || "http://localhost:5173/")
+        .redirect(`${process.env.FRONTEND_URL}/app` || "http://localhost:5173/app")
         // .json(
         //     new apiRes(
         //         200,

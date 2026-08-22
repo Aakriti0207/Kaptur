@@ -6,10 +6,10 @@ import api from "../core/api/client.js";
 import { useState } from "react";
 
 const navItems = [
-  { to: "/", label: "Overview", icon: LayoutDashboard },
-  { to: "/applications", label: "Applications", icon: Briefcase },
-  { to: "/insights", label: "Insights", icon: BarChart3 },
-  { to: "/profile", label: "Profile", icon: User },
+  { to: "/app", label: "Overview", icon: LayoutDashboard },
+  { to: "/app/applications", label: "Applications", icon: Briefcase },
+  { to: "/app/insights", label: "Insights", icon: BarChart3 },
+  { to: "/app/profile", label: "Profile", icon: User },
 ];
 
 export default function Sidebar() {
@@ -66,7 +66,7 @@ export default function Sidebar() {
               <NavLink
                 key={to}
                 to={to}
-                end={to === "/"}
+                end={to === "/app"}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     isActive
