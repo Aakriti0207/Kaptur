@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./core/context/ThemeContext";
 import LandingPage from "./features/landing/pages/LandingPage.jsx";
 import PrivacyPolicy from "./features/landing/pages/PrivacyPolicy.jsx";
@@ -18,7 +18,7 @@ export default function App() {
         <ScrollToTop/>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Navigate to="/" replace />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           <Route path = "/app" element={

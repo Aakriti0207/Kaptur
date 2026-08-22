@@ -29,7 +29,7 @@ export default function LandingPage() {
         </h2>
         <p className="text-espresso-textSecondary text-base md:text-lg mb-8">
           Kaptur reads your Gmail, finds every application you've sent, and
-          tracks its status — so you don't have to update a spreadsheet ever
+          tracks its status so you don't have to update a spreadsheet ever
           again.
         </p>
         <button
