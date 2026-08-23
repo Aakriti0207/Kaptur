@@ -19,7 +19,9 @@ const getProfile = asyncHandler(
 
 const updateProfile = asyncHandler(
     async (req, res) => {
-        const { fullName, phoneNum, preferredJobRoles } = req.body;
+        const { fullName, phoneNum, course, batchYear, skills, portfolioUrl, githubUrl, linkedinUrl } = req.body;
+
+        const profileCompleted = !!(course && batchYear && skills?.length);
 
         if(!(fullName || phoneNum || preferredJobRoles)){
             throw new apiError(
@@ -33,7 +35,14 @@ const updateProfile = asyncHandler(
             { 
                 $set: { 
                     fullName, 
-                    phoneNum, 
+                    phoneNum,
+                    course,
+                    batchYear,
+                    skills,
+                    portfolioUrl,
+                    githubUrl,
+                    linkedinUrl,
+                    profileCompleted,
                     preferredJobRoles 
                 }
             },

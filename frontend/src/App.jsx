@@ -10,6 +10,7 @@ import Profile from "./features/userProfile/pages/Profile.jsx";
 import Login from "./features/auth/pages/Login.jsx";
 import ProtectedRoute from "./features/auth/components/ProtectedRoutes.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import ProfileEdit from "./features/userProfile/pages/ProfileEdit.jsx";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="applications" element={<Applications />} />
             <Route path="insights" element={<div>Insights — coming in V2</div>} />
             <Route path="profile" element={<Profile />} />
+            <Route path="profile/edit" element={<ProfileEdit />} />
           </Route>
         </Routes>
       </BrowserRouter>

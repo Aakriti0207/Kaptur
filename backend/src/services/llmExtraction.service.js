@@ -15,11 +15,13 @@ const buildPrompt = (gmailData) => {
           "isJobRelated": true or false,
           "company": "string or null",
           "role": "string or null",
-          "status": "APPLIED" | "OA" | "INTERVIEW" | "OFFER" | "REJECTED" | null
+          "status": "APPLIED" | "OA" | "INTERVIEW" | "OFFER" | "REJECTED" | null,
+          "confidence" : 0.0,
+          "source" : "DIRECT" | "INDEED" | "LINKEDIN" | "WELLFOUND" | "GREENHOUSE" | "LEVER" | "INTERNSHALA" | "NAUKRI.COM" | "OTHER"
         }
 
         Rules:
-        - isJobRelated should be true ONLY if this email is directly about a specific job application the user submitted.
+        - isJobRelated should be true when the email provides evidence that the user applied to, was assessed for, interviewed for, received an offer from, or was rejected from a specific job. This includes application confirmation emails sent directly by employers AND application confirmation emails sent through job platforms such as Indeed, LinkedIn, Wellfound, Greenhouse, Lever, Workday, etc.
         - isJobRelated should be false for: promotional emails, newsletters, coding practice platforms (LeetCode, HackerRank contests), job recommendation emails, or generic marketing.
         - If isJobRelated is false, set company, role, and status to null.
         - Infer "status" from context: "APPLIED" for confirmations, "OA" for assessment invites, "INTERVIEW" for interview scheduling, "OFFER" for offer letters, "REJECTED" for rejections.
@@ -39,6 +41,18 @@ const buildPrompt = (gmailData) => {
         Snippet: ${gmailData.snippet}
     `;
 }
+
+const buildEnrichmentPrompt = (description) => {
+    return `Extract structured info from this job posting. Respond with ONLY JSON:
+{
+  "extractedSkills": ["skill1", "skill2"],
+  "eligibleBatches": ["2025", "2026"],
+  "experienceLevel": "intern" | "entry" | "mid",
+  "contactEmail": "email or null"
+}
+
+Job description: ${description}`;
+};
 
 const extractJobData = async(gmailData) => {
     const prompt = buildPrompt(gmailData);

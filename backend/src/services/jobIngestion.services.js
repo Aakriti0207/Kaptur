@@ -1,0 +1,1 @@
+import { jobPostings } from "../models/jobPosting.model";

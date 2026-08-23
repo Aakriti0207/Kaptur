@@ -146,6 +146,14 @@ const syncEmails = asyncHandler(
             const parsed = parseGmailData(rawData);
             const extracted = await extractJobData(parsed);
 
+            console.log("EMAIL:", {
+                subject: parsed.subject,
+                from: parsed.from,
+                snippet: parsed.snippet,
+            });
+            
+            console.log("LLM RESULT:", extracted);
+
             if(!extracted.isJobRelated){
                 notJobRelatedCount++;
                 continue;
