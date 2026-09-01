@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Search, ArrowRight, Archive, Pencil, Plus } from "lucide-react";
+import { Search, ArrowRight, Archive, Pencil, Plus, RefreshCw } from "lucide-react";
 import api from "../../../core/api/client";
 import StatusBadge from "../../../core/components/StatusBadge.jsx";
 import Modal from "../../../core/components/Modals.jsx";
 import ApplicationForm from "../components/ApplicationForm.jsx";
 import { getApplications, createApplication, archiveApplication } from "../api/applications.api.js";
+import { useSyncGmail } from "../../../core/hooks/useSyncGmail.js";
 
 const FILTERS = ["All", "Applied", "OA", "Interview", "Offer", "Rejected"];
 
@@ -25,6 +26,8 @@ export default function Applications() {
       setLoading(false);
     }
   };
+
+  const { syncing, sync } = useSyncGmail(loadApplications);
 
   useEffect(() => {
     loadApplications();
@@ -77,13 +80,27 @@ export default function Applications() {
             Your job search, in one place.
           </p>
         </div>
-        <button
-          onClick={() => setModalState("add")}
-          className="flex items-center gap-2 text-sm font-medium bg-caramel text-white px-4 py-2 rounded-lg hover:bg-caramel-dark transition-colors"
-        >
-          <Plus size={15} />
-          Add Application
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setModalState("add")}
+            className="flex items-center gap-2 text-sm font-medium bg-caramel text-white px-4 py-2 rounded-lg hover:bg-caramel-dark transition-colors"
+          >
+            <Plus size={15} />
+            Add Application
+          </button>
+
+          <button
+            onClick={sync}
+            disabled={syncing}
+            className="flex items-center gap-2 text-sm font-medium bg-caramel text-white px-4 py-2 rounded-lg hover:bg-caramel-dark transition-colors disabled:opacity-60"
+          >
+            <RefreshCw
+              size={15}
+              className={syncing ? "animate-spin" : ""}
+            />
+            {syncing ? "Syncing..." : "Sync Gmail"}
+          </button>
+        </div>
       </div>
  
       <div className="relative mb-4">

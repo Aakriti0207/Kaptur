@@ -5,12 +5,12 @@ import StatCard from "../components/StatCard";
 import StatusBadge from "../../../core/components/StatusBadge";
 import InboxPreview from "../components/InboxPreview";
 import SkeletonCard from "../../../core/components/skeletonCard";
+import { useSyncGmail } from "../../../core/hooks/useSyncGmail";
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
   const [applications, setApplications] = useState([]);
   const [profile, setProfile] = useState(null);
-  const [syncing, setSyncing] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const loadData = async () => {
@@ -30,21 +30,11 @@ export default function Dashboard() {
     }
   };
 
+  const { syncing, sync } = useSyncGmail(loadData);
+
   useEffect(() => {
     loadData();
   }, []);
-
-  const handleSync = async () => {
-    setSyncing(true);
-    try {
-      await api.get("/gmails/sync");
-      await loadData();
-    } catch (err) {
-      console.error("Sync failed:", err);
-    } finally {
-      setSyncing(false);
-    }
-  };
 
   if (loading) {
     return (
@@ -80,7 +70,7 @@ export default function Dashboard() {
           </p>
         </div>
         <button
-          onClick={handleSync}
+          onClick={sync}
           disabled={syncing}
           className="flex items-center gap-2 text-sm font-medium bg-caramel text-white px-4 py-2 rounded-lg hover:bg-caramel-dark transition-colors disabled:opacity-60"
         >
