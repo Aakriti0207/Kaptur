@@ -5,22 +5,46 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 const getUserApplications = asyncHandler(
     async(req,res) => {
-        const applications = await Application.find(
-            {
-                userId: req.user?._id,
-                isArchived: false
-            }
-        ).sort(
-            {
-                createdAt: -1
-            }
-        )
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page-1) * limit;
+        const [applications, total] = await Promise.All(
+            [
+                Application.find(
+                    {
+                       userId: req.user?._id,
+                       isArchived: false 
+                    }
+                ).sort(
+                    {
+                        createdAt: -1
+                    }
+                )
+                .skip(skip)
+                .limit(limit),
+
+                Application.countDocuments(
+                    {
+                        userId: req.user?._id,
+                        isArchived: false
+                    }
+                )
+            ]
+        );
         return res
         .status(200)
         .json(
             new apiRes(
                 200,
-                applications,
+                {
+                    applications,
+                    pagination: { 
+                        page, 
+                        limit, 
+                        total, 
+                        totalPages: Math.ceil(total / limit) 
+                    }
+                },
                 "Applications fetched successfully!"
             )
         )

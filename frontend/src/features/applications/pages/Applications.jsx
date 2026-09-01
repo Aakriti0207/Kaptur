@@ -15,23 +15,20 @@ export default function Applications() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [search, setSearch] = useState("");
   const [modalState, setModalState] = useState(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const loadApplications = async () => {
-    try {
-      const res = await api.get("/applications");
-      setApplications(res.data.data);
-    } catch (err) {
-      console.error("Failed to load applications:", err);
-    } finally {
-      setLoading(false);
-    }
+    const res = await api.get(`/applications?page=${page}&limit=10`);
+    setApplications(res.data.data.applications);
+    setTotalPages(res.data.data.pagination.totalPages);
   };
 
   const { syncing, sync } = useSyncGmail(loadApplications);
 
   useEffect(() => {
     loadApplications();
-  }, []);
+  }, [page]);
 
   const handleArchive = async (id) => {
     try {
