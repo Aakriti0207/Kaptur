@@ -19,9 +19,22 @@ export default function Applications() {
   const [totalPages, setTotalPages] = useState(1);
 
   const loadApplications = async () => {
-    const res = await api.get(`/applications?page=${page}&limit=10`);
-    setApplications(res.data.data.applications);
-    setTotalPages(res.data.data.pagination.totalPages);
+    try {
+      setLoading(true);
+      const res = await api.get(
+        `/applications?page=${page}&limit=10`
+      );
+
+      setApplications(res.data.data.applications);
+
+      setTotalPages(
+        res.data.data.pagination.totalPages
+      );
+    } catch (error) {
+      console.error("Failed to load applications:", error);
+    }finally {
+        setLoading(false);
+    }
   };
 
   const { syncing, sync } = useSyncGmail(loadApplications);
@@ -237,6 +250,28 @@ export default function Applications() {
           />
         </Modal>
       )}
+
+      <div className="flex items-center justify-center gap-4 mt-6">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage((p) => p - 1)}
+          className="text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          Previous
+        </button>
+
+        <span className="text-xs text-cream-textSecondary dark:text-espresso-textSecondary">
+          Page {page} of {totalPages}
+        </span>
+
+        <button
+          disabled={page === totalPages}
+          onClick={() => setPage((p) => p + 1)}
+          className="text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }
