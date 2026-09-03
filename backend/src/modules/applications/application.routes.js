@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { verifyJWT } from "../middleware/auth.middleware.js";
-import { archiveApplication, getUserApplications, updateApplicationStatus, updateApplication, createApplication } from "../controller/application.controller.js";
+import { verifyJWT } from "../../middleware/auth.middleware.js";
+import { archiveApplication, getUserApplications, updateApplicationStatus, updateApplication, createApplication } from "./application.controller.js";
 
 const applicationRouter = Router();
 

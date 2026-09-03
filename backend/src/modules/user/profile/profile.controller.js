@@ -1,7 +1,7 @@
-import { apiRes } from "../utils/apiRes.js";
-import { apiError } from "../utils/apiError.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { User } from "../models/user.model.js";
+import { apiRes } from "../../../utils/apiRes.js";
+import { apiError } from "../../../utils/apiError.js";
+import { asyncHandler } from "../../../utils/asyncHandler.js";
+import { User } from "../core/user.model.js";
 
 const getProfile = asyncHandler(
     async (req, res) => {

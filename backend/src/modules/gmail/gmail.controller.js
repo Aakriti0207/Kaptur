@@ -1,11 +1,11 @@
-import { User } from "../models/user.model.js";
-import { apiError } from "../utils/apiError.js";
-import { apiRes } from "../utils/apiRes.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { extractJobData } from "../services/llmExtraction.service.js";
-import { Application } from "../models/application.model.js";
-import { getMailContent, getGmailClient, listOfFilteredMails } from "../services/gmail.services.js";
-import { parseGmailData } from "../utils/parseGmailData.js";
+import { User } from "../user/core/user.model.js";
+import { apiError } from "../../utils/apiError.js";
+import { apiRes } from "../../utils/apiRes.js";
+import { asyncHandler } from "../../utils/asyncHandler.js";
+import { extractJobData } from "../../services/llmExtraction.service.js";
+import { Application } from "../applications/application.model.js";
+import { getMailContent, getGmailClient, listOfFilteredMails } from "./gmail.services.js";
+import { parseGmailData } from "../../utils/parseGmailData.js";
 
 const fetchEmails = asyncHandler(
     async(req,res) => {

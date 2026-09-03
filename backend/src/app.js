@@ -29,12 +29,12 @@ app.use(cookieParser())
 app.use(express.static("public"))
 
 //Routes
-import { authRouter } from "./routes/auth.routes.js";
-import { gmailRouter } from "./routes/gmail.routes.js";
-import { applicationRouter } from "./routes/application.routes.js";
-import { dashboardRouter } from "./routes/dashboard.routes.js";
-import { profileRouter } from "./routes/profile.routes.js";
-import { matchesRouter } from "./routes/daily-matches.routes.js";
+import { authRouter } from "./modules/auth/auth.routes.js";
+import { gmailRouter } from "./modules/gmail/gmail.routes.js";
+import { applicationRouter } from "./modules/applications/application.routes.js";
+import { dashboardRouter } from "./modules/dashboard/dashboard.routes.js";
+import { profileRouter } from "./modules/user/profile/profile.routes.js";
+import { matchesRouter } from "./modules/dailyMatches/dailyMatches.routes.js";
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/gmails", gmailRouter);

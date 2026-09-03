@@ -1,9 +1,9 @@
 import { version } from "mongoose";
-import { oauth2Client } from "../utils/googleClient.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import { oauth2Client } from "../../utils/googleClient.js";
+import { asyncHandler } from "../../utils/asyncHandler.js";
 import { google } from "googleapis";
-import { User } from "../models/user.model.js";
-import { apiRes } from "../utils/apiRes.js";
+import { User } from "../user/core/user.model.js";
+import { apiRes } from "../../utils/apiRes.js";
 
 const googleLogin = asyncHandler(
     async(req,res) => {

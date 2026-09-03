@@ -1,7 +1,7 @@
-import { Application } from "../models/application.model.js";
-import { apiError } from "../utils/apiError.js";
-import { apiRes } from "../utils/apiRes.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import { Application } from "./application.model.js";
+import { apiError } from "../../utils/apiError.js";
+import { apiRes } from "../../utils/apiRes.js";
+import { asyncHandler } from "../../utils/asyncHandler.js";
 
 const getUserApplications = asyncHandler(
     async(req,res) => {

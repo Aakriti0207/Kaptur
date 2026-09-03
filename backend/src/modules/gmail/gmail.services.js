@@ -1,5 +1,5 @@
 import { google } from "googleapis";
-import { oauth2Client } from "../utils/googleClient.js";
+import { oauth2Client } from "../../utils/googleClient.js";
 
 const getGmailClient = (refreshToken) => {
     oauth2Client.setCredentials(

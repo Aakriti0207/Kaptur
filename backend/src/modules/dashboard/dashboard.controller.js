@@ -1,6 +1,6 @@
-import { Application } from "../models/application.model.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { apiRes } from "../utils/apiRes.js";
+import { Application } from "../applications/application.model.js";
+import { asyncHandler } from "../../utils/asyncHandler.js";
+import { apiRes } from "../../utils/apiRes.js";
 
 const getDashboardStats = asyncHandler(
     async(req,res) => {

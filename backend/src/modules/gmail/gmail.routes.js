@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { fetchEmailById, fetchEmails, syncEmails, previewInbox } from "../controller/gmail.controller.js";
-import { verifyJWT } from "../middleware/auth.middleware.js";
+import { fetchEmailById, fetchEmails, syncEmails, previewInbox } from "./gmail.controller.js";
+import { verifyJWT } from "../../middleware/auth.middleware.js";
 
 const gmailRouter = Router();
 

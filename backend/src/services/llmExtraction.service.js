@@ -1,9 +1,14 @@
 import Groq from "groq-sdk"
-const groq = new Groq(
-    {
-        apiKey: process.env.GROQ_API_KEY
+
+const getGroqClient = () => {
+    const apiKey = process.env.GROQ_API_KEY;
+
+    if (!apiKey) {
+        throw new Error("GROQ_API_KEY environment variable is missing.");
     }
-);
+
+    return new Groq({ apiKey });
+};
 
 const buildPrompt = (gmailData) => {
     return `
@@ -55,6 +60,7 @@ Job description: ${description}`;
 };
 
 const extractJobData = async(gmailData) => {
+    const groq = getGroqClient();
     const prompt = buildPrompt(gmailData);
 
     const response = await groq.chat.completions.create({
