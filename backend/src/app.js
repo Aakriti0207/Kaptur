@@ -34,11 +34,13 @@ import { gmailRouter } from "./routes/gmail.routes.js";
 import { applicationRouter } from "./routes/application.routes.js";
 import { dashboardRouter } from "./routes/dashboard.routes.js";
 import { profileRouter } from "./routes/profile.routes.js";
+import { matchesRouter } from "./routes/daily-matches.routes.js";
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/gmails", gmailRouter);
 app.use("/api/v1/applications", applicationRouter);
 app.use("/api/v1/dashboard", dashboardRouter);
 app.use("/api/v1/profile", profileRouter);
+app.use("/api/v1/daily-matches", matchesRouter);
 
 export {app}

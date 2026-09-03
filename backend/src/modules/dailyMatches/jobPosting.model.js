@@ -37,21 +37,12 @@ const jobPostingSchema = new Schema (
         }],
         eligibleBatches: [String],
         experienceLevel: String,
-        contactEmail: String,
+        employmentType: String,
         postedDate: Date,
+        fetchedAt: Date,
         isActive: {
             type: Boolean,
             default: true
-        },
-        course: String,
-        batchYear: String,
-        skills: [String],
-        portfolioUrl: String,
-        githubUrl: String,
-        linkedinUrl: String,
-        profileCompleted: { 
-            type: Boolean, 
-            default: false 
         }
     },
     {

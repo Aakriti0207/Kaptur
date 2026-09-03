@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Briefcase, BarChart3, User, Moon, Sun, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, Briefcase, BarChart3, User, Moon, Sun, LogOut, Menu, X, NotebookText } from "lucide-react";
 import { useTheme } from "../core/context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import api from "../core/api/client.js";
@@ -8,6 +8,7 @@ import { useState } from "react";
 const navItems = [
   { to: "/app", label: "Overview", icon: LayoutDashboard },
   { to: "/app/applications", label: "Applications", icon: Briefcase },
+  { to: "/app/daily-matches", label: "Daily Matches", icon: NotebookText},
   { to: "/app/insights", label: "Insights", icon: BarChart3 },
   { to: "/app/profile", label: "Profile", icon: User },
 ];
