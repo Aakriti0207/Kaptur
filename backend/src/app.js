@@ -35,6 +35,7 @@ import { applicationRouter } from "./modules/applications/application.routes.js"
 import { dashboardRouter } from "./modules/dashboard/dashboard.routes.js";
 import { profileRouter } from "./modules/user/profile/profile.routes.js";
 import { matchesRouter } from "./modules/dailyMatches/dailyMatches.routes.js";
+import { resumeRouter } from "./modules/user/resume/resume.routes.js";
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/gmails", gmailRouter);
@@ -42,5 +43,6 @@ app.use("/api/v1/applications", applicationRouter);
 app.use("/api/v1/dashboard", dashboardRouter);
 app.use("/api/v1/profile", profileRouter);
 app.use("/api/v1/daily-matches", matchesRouter);
+app.use("/api/v1/resume", resumeRouter);
 
 export {app}

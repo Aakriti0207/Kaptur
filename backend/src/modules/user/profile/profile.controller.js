@@ -19,35 +19,58 @@ const getProfile = asyncHandler(
 
 const updateProfile = asyncHandler(
     async (req, res) => {
-        const { fullName, phoneNum, course, batchYear, skills, portfolioUrl, githubUrl, linkedinUrl } = req.body;
+        const {
+            fullName,
+            phoneNum,
 
-        const profileCompleted = !!(course && batchYear && skills?.length);
+            skills,
+            coreSkills,
 
-        if(!(fullName || phoneNum || preferredJobRoles)){
-            throw new apiError(
-                400,
-                "Any field is required"
-            )
-        }
+            experience,
+            education,
+
+            githubUrl,
+            linkedinUrl,
+            portfolioUrl
+        } = req.body;
+
+        const hasSkills = Array.isArray(skills) && skills.length > 0;
+        const hasEducation = Array.isArray(education) && education.length > 0 && education.some((item) => item.degree && item.graduationYear);
+
+        const profileCompleted = hasSkills && hasEducation;
 
         const user = await User.findByIdAndUpdate(
             req.user._id,
             { 
                 $set: { 
-                    fullName, 
-                    phoneNum,
-                    course,
-                    batchYear,
-                    skills,
-                    portfolioUrl,
-                    githubUrl,
-                    linkedinUrl,
-                    profileCompleted,
-                    preferredJobRoles 
+                    ...(fullName !== undefined && { fullName }),
+                    ...(phoneNum !== undefined && { phoneNum }),
+
+                    ...(skills !== undefined && { skills }),
+                    ...(coreSkills !== undefined && { coreSkills }),
+
+                    ...(experience !== undefined && { experience }),
+                    ...(education !== undefined && { education }),
+
+                    ...(githubUrl !== undefined && { githubUrl }),
+                    ...(linkedinUrl !== undefined && { linkedinUrl }),
+                    ...(portfolioUrl !== undefined && { portfolioUrl }),
+
+                    profileCompleted
                 }
             },
-            { new: true }
+            { 
+                new: true,
+                runValidators: true 
+            }
         ).select("-refreshToken");
+
+        if (!user) {
+            throw new apiError(
+                404,
+                "User not found"
+            );
+        }
 
         return res
         .status(200)
