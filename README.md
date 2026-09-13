@@ -1,4 +1,4 @@
-# Kaptur
+# Kaptur (Capture)
 
 **Your job search, in one place**
 
