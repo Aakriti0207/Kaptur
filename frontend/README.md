@@ -1,5 +1,9 @@
 # React + Vite
 
+## Landing motion
+
+The landing story is composed in `src/features/landing/components/LandingScenes.jsx`. Scene entrance timing lives beside each scene in its `useScrollScene` setup. Adjust `duration`, `stagger`, and the `start` / `end` values on those ScrollTriggers to tune the pace; `LandingPage.jsx` owns the Lenis `lerp` value for the overall scroll feel. `prefers-reduced-motion` disables Lenis, drift, and ScrollTrigger animations.
+
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
 Currently, two official plugins are available:
