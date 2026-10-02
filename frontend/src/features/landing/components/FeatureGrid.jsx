@@ -1,37 +1,29 @@
-import { Sparkles, ShieldCheck, LayoutGrid } from "lucide-react";
-
-const features = [
-  {
-    icon: Sparkles,
-    title: "Smart detection",
-    desc: "AI reads each email and figures out the company, role, and status — even filters out newsletters and spam.",
-  },
-  {
-    icon: LayoutGrid,
-    title: "One dashboard",
-    desc: "Every application, every stage, one place. No more digging through your inbox to remember where you stand.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Privacy-first",
-    desc: "Read-only Gmail access. Kaptur never sends, deletes, or modifies your emails.",
-  },
-];
+import { LockKeyhole, SlidersHorizontal } from "lucide-react";
 
 export default function FeatureGrid() {
   return (
-    <section className="px-6 md:px-12 py-16 max-w-4xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {features.map(({ icon: Icon, title, desc }) => (
-          <div
-            key={title}
-            className="bg-espresso-card border border-espresso-border rounded-card p-6"
-          >
-            <Icon size={22} className="text-caramel mb-3" />
-            <h3 className="font-medium text-espresso-textPrimary mb-2">{title}</h3>
-            <p className="text-sm text-espresso-textSecondary">{desc}</p>
+    <section className="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-24">
+      <div className="grid items-start gap-12 md:grid-cols-[1fr_1.3fr]">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-caramel">Your data, your call</p>
+          <h2 className="mt-4 max-w-md text-3xl font-medium leading-tight tracking-tight text-espresso-textPrimary md:text-4xl">Useful automation without giving up the steering wheel.</h2>
+        </div>
+        <div className="divide-y divide-espresso-border border-y border-espresso-border">
+          <div className="grid gap-4 py-6 sm:grid-cols-[2rem_1fr]">
+            <LockKeyhole size={20} className="text-caramel" strokeWidth={1.7} />
+            <div>
+              <h3 className="font-medium text-espresso-textPrimary">Read-only by design</h3>
+              <p className="mt-2 max-w-lg text-sm leading-6 text-espresso-textSecondary">Kaptur reads the messages needed to find applications. It never sends, deletes, or modifies your emails.</p>
+            </div>
           </div>
-        ))}
+          <div className="grid gap-4 py-6 sm:grid-cols-[2rem_1fr]">
+            <SlidersHorizontal size={20} className="text-caramel" strokeWidth={1.7} />
+            <div>
+              <h3 className="font-medium text-espresso-textPrimary">You can correct anything</h3>
+              <p className="mt-2 max-w-lg text-sm leading-6 text-espresso-textSecondary">Review detected details, edit a status, add an application manually, or archive what no longer belongs in your view.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

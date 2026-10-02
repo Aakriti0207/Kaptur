@@ -6,35 +6,65 @@ export default function DashboardPreview() {
   ];
 
   return (
-    <div className="px-6 md:px-12 pb-16 max-w-3xl mx-auto">
-      <div className="bg-espresso-card border border-espresso-border rounded-card p-4 md:p-6 shadow-2xl">
-        <div className="grid grid-cols-3 gap-3 mb-4">
+    <section className="mx-auto max-w-7xl px-6 pb-24 md:px-10">
+      <div className="mb-7 flex flex-col justify-between gap-3 border-t border-espresso-border pt-5 md:flex-row md:items-end">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-caramel">The tracker</p>
+          <h2 className="mt-2 max-w-md text-2xl font-medium tracking-tight text-espresso-textPrimary md:text-3xl">Every application, without the spreadsheet.</h2>
+        </div>
+        <p className="max-w-xs text-sm leading-6 text-espresso-textSecondary">A living view of where your applications stand, updated from the emails already in your inbox.</p>
+      </div>
+      <div className="border border-espresso-border bg-espresso-card p-4 shadow-2xl shadow-black/10 md:p-6">
+        <div className="mb-5 flex flex-col justify-between gap-3 border-b border-espresso-border pb-4 sm:flex-row sm:items-center">
+          <div>
+            <p className="text-xs text-espresso-textSecondary">Good morning, Aakriti</p>
+            <p className="mt-1 text-sm font-medium text-espresso-textPrimary">Your application pipeline</p>
+          </div>
+          <span className="text-xs text-caramel">Last synced just now</span>
+        </div>
+        <div className="mb-5 grid grid-cols-3 gap-2 md:gap-3">
           {[
             { label: "Applied", value: "24" },
             { label: "Interviews", value: "3" },
             { label: "Offers", value: "1" },
           ].map((s) => (
-            <div key={s.label} className="bg-espresso-canvas rounded-lg p-3 text-center">
-              <p className="font-serif text-xl font-semibold text-caramel">{s.value}</p>
+            <div key={s.label} className="border border-espresso-border bg-espresso-canvas p-3 md:p-4">
+              <p className="font-mono text-xl font-medium text-caramel">{s.value}</p>
               <p className="text-xs text-espresso-textSecondary">{s.label}</p>
             </div>
           ))}
         </div>
-
-        <div className="flex flex-col divide-y divide-espresso-border">
-          {rows.map((r) => (
-            <div key={r.company} className="flex items-center justify-between py-3">
-              <div>
-                <p className="text-sm font-medium text-espresso-textPrimary">{r.company}</p>
-                <p className="text-xs text-espresso-textSecondary">{r.role}</p>
-              </div>
-              <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${r.statusColor}`}>
-                {r.status}
-              </span>
+        <div className="grid gap-6 md:grid-cols-[1fr_0.7fr]">
+          <div>
+            <div className="mb-2 grid grid-cols-[1.2fr_1fr_auto] gap-3 px-2 text-[10px] uppercase tracking-[0.14em] text-espresso-textSecondary">
+              <span>Company</span><span>Role</span><span>Status</span>
             </div>
-          ))}
+            <div className="divide-y divide-espresso-border border-y border-espresso-border">
+              {rows.map((r) => (
+                <div key={r.company} className="grid grid-cols-[1.2fr_1fr_auto] items-center gap-3 px-2 py-4">
+                  <p className="text-sm font-medium text-espresso-textPrimary">{r.company}</p>
+                  <p className="text-xs text-espresso-textSecondary">{r.role}</p>
+                  <span className={`whitespace-nowrap px-2 py-1 text-[10px] font-medium ${r.statusColor}`}>
+                    {r.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="border border-espresso-border bg-espresso-canvas p-4">
+            <p className="text-xs font-medium text-espresso-textPrimary">Next up</p>
+            <div className="mt-5 border-l border-caramel pl-3">
+              <p className="text-xs text-caramel">Interview</p>
+              <p className="mt-1 text-sm font-medium text-espresso-textPrimary">Google · SWE Intern</p>
+              <p className="mt-1 text-xs leading-5 text-espresso-textSecondary">Your calendar is clear tomorrow at 11:00 AM.</p>
+            </div>
+            <div className="mt-8 flex items-center justify-between border-t border-espresso-border pt-3 text-[10px] text-espresso-textSecondary">
+              <span>3 active interviews</span>
+              <span className="text-caramel">Open →</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
