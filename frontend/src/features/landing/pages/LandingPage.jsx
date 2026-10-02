@@ -32,7 +32,7 @@ export default function LandingPage() {
           <nav className="nav-links">
             <a href="#pipeline">Pipeline</a>
             <a href="#about">About</a>
-            <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://github.com/Aakriti0207/kaptur" target="_blank" rel="noreferrer">GitHub</a>
             <button className="theme-toggle" onClick={() => setLight(value => !value)} aria-label="Toggle theme">{light ? "☾" : "☼"}</button>
             <button className="primary-button" onClick={handleLogin}>Continue with Google</button>
           </nav>
